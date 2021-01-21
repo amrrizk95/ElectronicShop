@@ -1,0 +1,38 @@
+﻿@model ElectronicShopBL.ViewModels.UserVM
+@{
+    ViewData["Title"] = "Login";
+}
+
+    <form method="post">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Sign In</h5>
+                    <div class="form-signin">
+                        <div class="form-label-group">
+                            <label >Email address</label>
+                            <input asp-for="userName" class="form-control" placeholder="User Name" required autofocus>
+                        </div>
+
+                        <div class="form-label-group">
+                            <label >Password</label>
+                            <input type="password" asp-for="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" style="margin-top:20px;" type="submit" id="login">Sign in</button>
+                        <hr class="my-4">
+                        <div class="form-label-group">
+                            <select class="form-control">
+                                <option value="ar">عربى</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </form>
+

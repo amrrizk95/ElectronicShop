@@ -1,0 +1,53 @@
+﻿@model ElectronicShopBL.ViewModels.CustomerVM
+@{
+    ViewData["Title"] = "Create";
+}
+ <form method="post">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Sign In</h5>
+                    <div class="form-register">
+                        <div class="form-label-group">
+                            <label>Full Name</label>
+                            <input asp-for="name" class="form-control" placeholder="Full Name" required autofocus>
+                        </div>
+                        <div class="form-label-group">
+                            <label>Email address</label>
+                            <input asp-for="email" type="email" class="form-control" placeholder="User Name" required autofocus>
+                        </div>
+
+                        <div class="form-label-group">
+                            <label>Password</label>
+                            <input asp-for="password" type="password" class="form-control" placeholder="Password" required autofocus>
+                        </div>
+                        <div class="form-label-group">
+                            <label>Phone No</label>
+                            <input asp-for="phone" type="text" class="form-control" placeholder="Phone No" required autofocus>
+                        </div>
+                        <div class="form-label-group">
+                            <label>Address</label>
+                            <input asp-for="address" type="text" class="form-control" placeholder="Address" required autofocus>
+                        </div>
+                        <div class="form-label-group">
+                            <label>Birth date</label>
+                            <input asp-for="birthdate" type="date" class="form-control" placeholder="Birth date" required autofocus>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+                        <hr class="my-4">
+                        <div class="form-label-group">
+                            <select class="form-control">
+                                <option value="ar">عربى</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </form>
+

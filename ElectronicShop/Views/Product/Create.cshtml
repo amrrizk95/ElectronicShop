@@ -1,0 +1,44 @@
+﻿@model ElectronicShopBL.ViewModels.ProductVM
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+    #productForm {
+        margin-top: 50px;
+    }
+</style>
+<div id="productForm">
+    <form method="post">
+        <div class="form-group">
+            <label>Name Ar</label>
+            <input type="text" asp-for="nameAr" class="form-control" placeholder="Name Ar" required autofocus>
+        </div>
+        <div class="form-group">
+            <label>Name En</label>
+            <input type="text" asp-for="nameEn" class="form-control" placeholder="Name En" required autofocus>
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" asp-for="price" class="form-control" placeholder="Price" required autofocus>
+        </div>
+        <div class="form-group">
+            <label class="my-1 mr-2">Category</label>
+            <select asp-for="categoryId" class="form-control" required autofocus>
+                <option selected>Choose...</option>
+                <option value="3">Tv</option>
+                <option value="6">LapTop</option>
+                <option value="7">Sound System</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="my-1 mr-2">Description</label>
+            <textarea asp-for="description" class="form-control">
+
+            </textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+

@@ -1,4 +1,5 @@
-﻿using ElectronicShopBL.ViewModels;
+﻿using ElectronicShop.Filters;
+using ElectronicShopBL.ViewModels;
 using ElectronicShopRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ElectronicShop.Controllers
 {
+   
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -33,6 +35,8 @@ namespace ElectronicShop.Controllers
         }
 
         // GET: ProductController/Create
+        [Authenticate]
+        [AuthorizeAdmin]
         public ActionResult Create()
         {
             return View();
@@ -40,7 +44,8 @@ namespace ElectronicShop.Controllers
 
         // POST: ProductController/Create
         [HttpPost]
-     
+        [Authenticate]
+        [AuthorizeAdmin]
         public IActionResult Create(ProductVM productVM)
         {
             if (ModelState.IsValid)

@@ -24,8 +24,8 @@ namespace ElectronicShopBL.Helper
 
         public enum Roles
         {
-            Admin = 0,
-            Customer = 1,
+            Admin = 1,
+            Customer = 2,
         }
     }
 }

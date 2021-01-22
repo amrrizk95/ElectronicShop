@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ElectronicShop.Filters;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace ElectronicShop.Controllers
         // POST: OrderController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authenticate]
+
         public ActionResult Create(IFormCollection collection)
         {
             try

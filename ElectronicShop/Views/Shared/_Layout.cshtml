@@ -36,9 +36,9 @@
                 <a class="list-group-item list-group-item-action bg-light sidebar-heading">Log out </a> 
                 @if (CurrentUserRole==0)
                 {
-                <a asp-controller="Product" asp-action="Index" class="list-group-item list-group-item-action bg-light">Products</a>
                 <a asp-action="Index" asp-controller="Customer" class="list-group-item list-group-item-action bg-light">Customers</a>
                 } 
+                <a asp-controller="Product" asp-action="Index" class="list-group-item list-group-item-action bg-light">Products</a>
                 <a asp-action="Index" asp-controller="Order" class="list-group-item list-group-item-action bg-light">Orders</a>
             </div>
         </div>

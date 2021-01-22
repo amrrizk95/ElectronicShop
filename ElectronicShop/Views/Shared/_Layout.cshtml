@@ -33,7 +33,7 @@
         <!-- Sidebar -->
         <div class="bg-light border-right" id="sidebar-wrapper">
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action bg-light sidebar-heading">Log out </a> 
+           
                 @if (CurrentUserRole==0)
                 {
                 <a asp-action="Index" asp-controller="Customer" class="list-group-item list-group-item-action bg-light">Customers</a>
@@ -60,16 +60,21 @@
                         @if (CurrentUserId.HasValue)
                         {
                             <li class="nav-item">
-                                <a class="nav-link"  >@ViewBag.UserName</a>
+                                <a class="nav-link">@ViewBag.UserName</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-action="LogOut" asp-controller="User">Log out </a>
                             </li>
                         }
                         else
                         {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="Login" asp-controller="User">Login</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-action="Login" asp-controller="User">Login</a>
+                            </li>
 
                         }
+
+
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Create" asp-controller="Customer">Register</a>
                         </li>

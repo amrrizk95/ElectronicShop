@@ -48,6 +48,11 @@ namespace ElectronicShop.Controllers
             }
             return RedirectToAction("Index","Home");
         }
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
         // GET: UserController/Details/5
         public ActionResult Details(int id)
         {

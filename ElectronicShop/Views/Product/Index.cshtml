@@ -1,10 +1,23 @@
 ﻿@model List<ElectronicShopBL.ViewModels.ProductVM>
+@using Microsoft.AspNetCore.Http
+@using static ElectronicShopBL.Helper.helper;
+@{
+    ViewData["Title"] = "Create";
+}
+@{
+    var CurrentUserId = Html.ViewContext.HttpContext.Session.GetInt32("CurrentUserId");
+    var CurrentUserRole = Html.ViewContext.HttpContext.Session.GetInt32("UserRole");
+    if (CurrentUserId.HasValue)
+    {
+        ViewBag.UserName = Html.ViewContext.HttpContext.Session.GetString("UserName");
+    }
+}
 @{
     ViewData["Title"] = "Index";
 }
 <style>
-    #productsList{
-        margin-top:50px;
+    #productsList {
+        margin-top: 50px;
     }
 </style>
 
@@ -15,10 +28,14 @@
     <hr />
 </div>
 
+@if (CurrentUserRole == (int)Roles.Admin)
+{
+    <div>
+        <a class="btn btn-success" asp-action="Create" asp-controller="Product">Add Product</a>
+    </div>
 
-<div>
-    <a class="btn btn-success" asp-action="Create" asp-controller="Product">Add Product</a>
-</div>
+}
+
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -45,23 +62,23 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>@item.nameAr</td>
-                    <td>@item.nameEn</td>
-                    <td>@item.price</td>
-                    <td>@item.description</td>
-                    <td>@item.categoryNameAr</td>
-                </tr>
+                    <tr>
+                        <td>@item.nameAr</td>
+                        <td>@item.nameEn</td>
+                        <td>@item.price</td>
+                        <td>@item.description</td>
+                        <td>@item.categoryNameAr</td>
+                    </tr>
 
                 }
             </tbody>
         </table>
     </div>
-</div> 
+</div>
 
 <script>
     $('#example').dataTable({
-    });  
+    });
 </script>
 
 

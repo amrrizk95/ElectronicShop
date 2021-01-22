@@ -26,7 +26,7 @@ namespace ElectronicShop.Filters
             else 
             {
                 int userRole = value[0];
-                if (userRole != (int)Roles.Admin)
+                if (userRole != (int)Roles.Customer)
                 {
                     Unauthorized(context);
                 }

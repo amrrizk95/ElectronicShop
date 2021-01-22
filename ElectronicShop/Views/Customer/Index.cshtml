@@ -1,21 +1,32 @@
 ﻿@model List<ElectronicShopBL.ViewModels.CustomerVM>
+@using Microsoft.AspNetCore.Http
+@using static ElectronicShopBL.Helper.helper;
 @{
     ViewData["Title"] = "Index";
 }
-
+@{
+    var CurrentUserId = Html.ViewContext.HttpContext.Session.GetInt32("CurrentUserId");
+    var CurrentUserRole = Html.ViewContext.HttpContext.Session.GetInt32("UserRole");
+    if (CurrentUserId.HasValue)
+    {
+        ViewBag.UserName = Html.ViewContext.HttpContext.Session.GetString("UserName");
+    }
+}
 
 <style>
     #customersList {
         margin-top: 50px;
     }
 </style>
-<div>
-    <h1>Customers</h1>
-    <hr />
-</div>
-<div>
-    <a class="btn btn-success" asp-action="Create" asp-controller="Customer">Add Customer</a>
-</div>
+    <div>
+        <h1>Customers</h1>
+        <hr />
+    </div>
+@if (CurrentUserRole == (int)Roles.Admin) { 
+    <div>
+        <a class="btn btn-success" asp-action="Create" asp-controller="Customer">Add Customer</a>
+    </div>
+}
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

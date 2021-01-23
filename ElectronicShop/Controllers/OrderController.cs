@@ -1,4 +1,6 @@
 ﻿using ElectronicShop.Filters;
+using ElectronicShopBL.ViewModels;
+using ElectronicShopRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,38 +12,52 @@ namespace ElectronicShop.Controllers
 {
     public class OrderController : Controller
     {
-        // GET: OrderController1
-        public ActionResult Index()
+        private readonly IUnitOfWork _unitOfWork;
+        public OrderController(IUnitOfWork unitOfWork)
         {
-            return View();
+            _unitOfWork = unitOfWork;
+        }
+        // GET: OrderController1
+        [Authenticate]
+      
+        public IActionResult Index()
+        {
+            var userId = HttpContext.Session.GetInt32("CurrentUserId");
+            var Role = HttpContext.Session.GetInt32("UserRole");
+            var vm = OrderVM.getUserOrders(_unitOfWork, userId, Role);
+
+            return View(vm);
         }
 
         // GET: OrderController1/Details/5
         public ActionResult Details(int id)
         {
+           
             return View();
         }
 
         // GET: OrderController1/Create
-        public ActionResult Create()
+        public ActionResult Create( int productId)
         {
-            return View();
+            var vm= OrderVM.getOrderVM(_unitOfWork, productId);
+            return View(vm);
         }
 
         // POST: OrderController1/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authenticate]
 
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create(OrderVM vm)
         {
-            try
+            var customerId = HttpContext.Session.GetInt32("CurrentUserId");
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var result = OrderVM.addOrder(_unitOfWork, vm, customerId);
+                return RedirectToAction("Index", "Order");
             }
-            catch
+            else
             {
-                return View();
+                return View(vm);
             }
         }
 

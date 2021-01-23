@@ -1,7 +1,37 @@
-﻿
-@{
-    ViewData["Title"] = "Create";
-}
+﻿@model ElectronicShopBL.ViewModels.OrderVM
+@using Microsoft.AspNetCore.Http
 
-<h1>Create</h1>
+
+
+<style>
+    #orderForm {
+        margin-top: 50px;
+    }
+</style>
+<div id="orderForm">
+    <form method="post">
+        <input type="hidden" asp-for="customerId" />
+        <input type="hidden" asp-for="productPrice" />
+        <div class="form-group">
+            <label>ProductNmae</label>
+            <input type="text" asp-for="productName" class="form-control" disabled />
+            <input type="hidden" asp-for="productId" />
+        </div>
+        <div class="form-group">
+            <label>Name En</label>
+            <input type="text" asp-for="categoryName" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" asp-for="productPrice" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label class="my-1 mr-2">Quintity</label>
+            <input asp-for="quntity" class="form-control"  required autofocus/>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+
 

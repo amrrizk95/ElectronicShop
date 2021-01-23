@@ -17,7 +17,7 @@ namespace ElectronicShopModel
         public DateTime createdDate { get; set; }
         [ForeignKey("category")]
         public int categoryId { get; set; }
-        public Category category { get; set; }
+        public virtual Category category { get; set; }
 
    
     }

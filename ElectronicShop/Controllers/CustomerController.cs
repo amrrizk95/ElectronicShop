@@ -1,4 +1,5 @@
 ﻿using ElectronicShop.App_Start;
+using ElectronicShop.Filters;
 using ElectronicShopBL.IBL;
 using ElectronicShopBL.ViewModels;
 using ElectronicShopRepository;
@@ -21,6 +22,7 @@ namespace ElectronicShop.Controllers
             _unitOfWork = unitOfWork;
         }
         // GET: CustomerController
+        [AuthorizeAdmin]
         public ActionResult Index()
         {
             var vm = CustomerVM.getCustomers(_unitOfWork);
@@ -34,6 +36,7 @@ namespace ElectronicShop.Controllers
         }
 
         // GET: CustomerController/Create
+        [AuthorizeAdmin]
         public ActionResult Create()
         {
             return View();
@@ -41,6 +44,7 @@ namespace ElectronicShop.Controllers
 
         // POST: CustomerController/Create
         [HttpPost]
+        [AuthorizeAdmin]
         public ActionResult Create(CustomerVM customerVM)
         {
             if (ModelState.IsValid)

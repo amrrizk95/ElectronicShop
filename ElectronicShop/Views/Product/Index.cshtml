@@ -37,6 +37,8 @@
 }
 
 
+  
+
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
@@ -57,17 +59,30 @@
                     <th>Price</th>
                     <th>Description</th>
                     <th>Category</th>
+                    @if (CurrentUserId.HasValue)
+                    {
+                      <th>Options</th>
+                    }
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
+                    IDictionary<string, string> routeData = new Dictionary<string, string>();
+                    routeData.Add("productId", item.id.ToString());
+
                     <tr>
                         <td>@item.nameAr</td>
                         <td>@item.nameEn</td>
                         <td>@item.price</td>
                         <td>@item.description</td>
                         <td>@item.categoryNameAr</td>
+                        @if (CurrentUserId.HasValue)
+                        {
+                        <td>
+                            <a class="btn btn-primary" asp-controller="Order" asp-action="Create" asp-all-route-data="routeData">Order</a>
+                        </td>
+                        }
                     </tr>
 
                 }

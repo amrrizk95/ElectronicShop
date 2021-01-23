@@ -18,15 +18,15 @@ namespace ElectronicShop.Filters
             if (!session.IsAvailable)
                 Login(context);
             byte[] value;
-            session.TryGetValue("UserRole", out value);
+            var x = session.TryGetValue("UserRole", out value);
             if (value == null)
             {
                 Login(context);
             }
             else 
             {
-                int userRole = value[0];
-                if (userRole != (int)Roles.Customer)
+                var role = session.GetInt32("UserRole");
+                if (role.Value != (int)Roles.Customer&& role.Value != (int)Roles.Admin)
                 {
                     Unauthorized(context);
                 }

@@ -24,8 +24,8 @@ namespace ElectronicShop.Filters
             }
             else
             {
-                int userRole = value[0];
-                if (userRole != (int)Roles.Admin)
+               
+                if (session.GetInt32("UserRole") != (byte)Roles.Admin)
                 {
                     Unauthorized(context);
                 }

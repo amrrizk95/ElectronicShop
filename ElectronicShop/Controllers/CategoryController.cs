@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ElectronicShop.App_Start;
+using ElectronicShopBL.IBL;
+using ElectronicShopBL.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Unity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,9 +14,16 @@ namespace ElectronicShop.Controllers
     public class CategoryController : Controller
     {
         // GET: CategoryController
+        //private readonly IBussinseContext bussinseContext;
+        IBussinseContext bussinseContext = UnityConfig.Container.Resolve<IBussinseContext>();
+        //public CategoryController(IBussinseContext _bussinseContext)
+        //{
+        //    bussinseContext = _bussinseContext;
+        //}
         public ActionResult Index()
         {
-            return View();
+            var vm = CategoryVM.getCategories(bussinseContext);
+            return View(vm);
         }
 
         // GET: CategoryController/Details/5
@@ -22,24 +33,31 @@ namespace ElectronicShop.Controllers
         }
 
         // GET: CategoryController/Create
-        public ActionResult Create()
+        [HttpPost]
+        public IActionResult Create(CategoryVM categoryVM)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var result = CategoryVM.addCategory(bussinseContext, categoryVM);
+                if (result == null)
+                {
+                    return View(categoryVM);
+                }
+                else
+                {
+                    return Redirect("Index");
+                }
+            }
+            return View(categoryVM);
         }
 
         // POST: CategoryController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [HttpGet]
+        public IActionResult Create()
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+       
                 return View();
-            }
+            
         }
 
         // GET: CategoryController/Edit/5

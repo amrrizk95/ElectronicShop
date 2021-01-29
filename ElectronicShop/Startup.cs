@@ -14,6 +14,8 @@ using ElectronicShop.App_Start;
 using Microsoft.AspNetCore.Http;
 using ElectronicShopRepository;
 using ElectronicShopRepository.Repositories;
+using ElectronicShopBL.IBL;
+using ElectronicShopBL.BL;
 
 namespace ElectronicShop
 {
@@ -47,6 +49,7 @@ namespace ElectronicShop
                 options.IdleTimeout = TimeSpan.FromDays(30);
             });
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            //services.AddTransient<IBussinseContext, BussinseContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

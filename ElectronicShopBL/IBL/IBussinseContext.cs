@@ -7,7 +7,7 @@ namespace ElectronicShopBL.IBL
 {
    public interface IBussinseContext: IDisposable
     {
-        IUnitOfWork UnitOfWork { get; set; }
+        IUnitOfWork UnitOfWork { get;  }
         ICategoryBL CategoryBL { get;  }
          ICustomerBL CustomerBL{ get; }
          IOrderBL OrderBL { get; }

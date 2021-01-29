@@ -11,7 +11,7 @@ namespace ElectronicShopRepository.Repositories
         private readonly ElectronicShopContext _dbContext;
         public UnitOfWork(ElectronicShopContext dbContext)
         {
-            _dbContext = dbContext;
+            _dbContext = new ElectronicShopContext();
         }
          ICategoryRepository categoryRepository ;
 

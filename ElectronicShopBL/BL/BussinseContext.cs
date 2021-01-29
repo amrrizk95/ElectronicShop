@@ -13,13 +13,27 @@ namespace ElectronicShopBL.BL
    public class BussinseContext : IBussinseContext
     {
 
-     
-        public IUnitOfWork UnitOfWork { get; set; }
+
+        IUnitOfWork unitOfWork;
         ICategoryBL categoryBL;
         ICustomerBL customerBL;
         IOrderBL orderBL;
         IProductBL productBL;
         IUserBL userBL;
+        public IUnitOfWork UnitOfWork
+        {
+            get
+            {
+                if (unitOfWork == null)
+                {
+                    unitOfWork = UnityConfig.Container.Resolve<IUnitOfWork>(new ResolverOverride[]
+                        {
+                              new ParameterOverride("bussinseContext", this)
+                        });
+                }
+                return unitOfWork;
+            }
+        }
         public ICategoryBL CategoryBL
         {
             get
@@ -79,7 +93,10 @@ namespace ElectronicShopBL.BL
 
                 return productBL;
             }
-        }
+        } 
+
+
+  
         public IUserBL UserBL
         {
             get

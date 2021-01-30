@@ -1,4 +1,5 @@
-﻿using ElectronicShopModel;
+﻿using ElectronicShopBL.IBL;
+using ElectronicShopModel;
 using ElectronicShopRepository;
 using System;
 using System.Collections.Generic;
@@ -46,15 +47,14 @@ namespace ElectronicShopBL.ViewModels
             modelVM.categoryNameEn = product.category.nameAr;
             return modelVM;
         }
-        public static Product addProduct(IUnitOfWork unitOfWork, ProductVM productVM)
+        public static Product addProduct(IBussinseContext bussinseContext, ProductVM productVM)
         {
             // add product
             Product product = productVM;
             product.createdDate = DateTime.Now;
             try
             {
-                unitOfWork.ProductRepository.Add(product);
-                unitOfWork.Complete();
+                bussinseContext.ProductBL.AddNew(product);
             }
             catch (Exception e)
             {
@@ -63,9 +63,9 @@ namespace ElectronicShopBL.ViewModels
             }
             return product;
         }
-        public static List<ProductVM> getProducts(IUnitOfWork unitOfWork)
+        public static List<ProductVM> getProducts(IBussinseContext bussinseContext)
         {
-            var data=    unitOfWork.ProductRepository.GetAllWithInclude("category");
+            var data=    bussinseContext.ProductBL.GetAll("category");
             var VMs = new List<ProductVM>();
             foreach (var item in data)
             {
@@ -74,9 +74,9 @@ namespace ElectronicShopBL.ViewModels
             }
             return VMs;
         }
-        public static Product getProduct(IUnitOfWork unitOfWork,int id)
+        public static Product getProduct(IBussinseContext bussinseContext, int id)
         {
-            return unitOfWork.ProductRepository.Get(id);
+            return bussinseContext.ProductBL.Get(id);
         }
     }
 }

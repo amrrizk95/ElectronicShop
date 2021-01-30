@@ -8,18 +8,16 @@ using Unity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ElectronicShop.Filters;
 
 namespace ElectronicShop.Controllers
 {
     public class CategoryController : Controller
     {
-        // GET: CategoryController
-        //private readonly IBussinseContext bussinseContext;
+
         IBussinseContext bussinseContext = UnityConfig.Container.Resolve<IBussinseContext>();
-        //public CategoryController(IBussinseContext _bussinseContext)
-        //{
-        //    bussinseContext = _bussinseContext;
-        //}
+
+        [AuthorizeAdmin]
         public ActionResult Index()
         {
             var vm = CategoryVM.getCategories(bussinseContext);
@@ -33,6 +31,7 @@ namespace ElectronicShop.Controllers
         }
 
         // GET: CategoryController/Create
+        [AuthorizeAdmin]
         [HttpPost]
         public IActionResult Create(CategoryVM categoryVM)
         {
@@ -52,6 +51,7 @@ namespace ElectronicShop.Controllers
         }
 
         // POST: CategoryController/Create
+        [AuthorizeAdmin]
         [HttpGet]
         public IActionResult Create()
         {

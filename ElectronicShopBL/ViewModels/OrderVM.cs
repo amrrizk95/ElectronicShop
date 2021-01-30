@@ -1,4 +1,5 @@
-﻿using ElectronicShopModel;
+﻿using ElectronicShopBL.IBL;
+using ElectronicShopModel;
 using ElectronicShopRepository;
 using System;
 using System.Collections.Generic;
@@ -35,12 +36,12 @@ namespace ElectronicShopBL.ViewModels
             return model;
         }
 
-        public static List<OrderVM> getUserOrders(IUnitOfWork unitOfWork, int? userId, int? role)
+        public static List<OrderVM> getUserOrders(IBussinseContext bussinseContext, int? userId, int? role)
         {
             var ordersVM = new List<OrderVM>();
             if (role== (int)Roles.Admin)
             {
-                var orders = unitOfWork.OrderRepository.GetAllWithInclude("customer", "product.category");
+                var orders = bussinseContext.OrderBL.GetAll("customer", "product.category");
                 foreach (var item in orders)
                 {
                     OrderVM vm = item;
@@ -55,7 +56,7 @@ namespace ElectronicShopBL.ViewModels
             }
             if (role==(int)Roles.Customer)
             {
-                var orders = unitOfWork.OrderRepository.GetAllWithInclude(o=>o.customerId==userId,"customer", "product.category");
+                var orders = bussinseContext.OrderBL.GetWithInclude(o=>o.customerId==userId,"customer", "product.category");
                 foreach (var item in orders)
                 {
                     OrderVM vm = item;
@@ -80,7 +81,7 @@ namespace ElectronicShopBL.ViewModels
             modelVM.quntity = order.qty;
             return modelVM;
         }
-        public static Order addOrder(IUnitOfWork unitOfWork, OrderVM orderVM,int? customerId)
+        public static Order addOrder(IBussinseContext bussinseContext, OrderVM orderVM,int? customerId)
         {
         
             // place order
@@ -90,8 +91,7 @@ namespace ElectronicShopBL.ViewModels
             order.customerId = customerId.Value;
             try
             {
-                unitOfWork.OrderRepository.Add(order);
-                unitOfWork.Complete();
+                bussinseContext.OrderBL.AddNew(order);
             }
             catch (Exception e)
             {
@@ -100,9 +100,9 @@ namespace ElectronicShopBL.ViewModels
             }
             return order;
         } 
-        public static OrderVM getOrderVM(IUnitOfWork unitOfWork,int  productId)
+        public static OrderVM getOrderVM(IBussinseContext bussinseContext, int  productId)
         {
-            var product = unitOfWork.ProductRepository.GetAllWithInclude(p=>p.id==productId,"category");
+            var product = bussinseContext.ProductBL.GetWithInclude(p=>p.id==productId,"category");
             var OrderVM = new OrderVM();
             OrderVM.productPrice = product[0].price;
             OrderVM.productId = productId;

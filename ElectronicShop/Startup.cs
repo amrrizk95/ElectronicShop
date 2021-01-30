@@ -40,7 +40,8 @@ namespace ElectronicShop
             });
 
             services.AddCors();
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            // register BL components
             UnityConfig.RegisterComponents();
             services.AddDirectoryBrowser();
             //set session time out
@@ -48,8 +49,7 @@ namespace ElectronicShop
             {
                 options.IdleTimeout = TimeSpan.FromDays(30);
             });
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            //services.AddTransient<IBussinseContext, BussinseContext>();
+      
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,12 +81,12 @@ namespace ElectronicShop
             });
             
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    "default",
-                    "{controller=Home}/{action=Index}/{id?}");
-            });
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        "default",
+            //        "{controller=Home}/{action=Index}/{id?}");
+            //});
             // Shows UseCors with CorsPolicyBuilder.
 
             app.UseCors(builder =>

@@ -15,11 +15,6 @@ namespace ElectronicShop.Controllers
     public class UserController : Controller
     {
         IBussinseContext bussinseContext = UnityConfig.Container.Resolve<IBussinseContext>();
-        private readonly IUnitOfWork _unitOfWork;
-        public UserController(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
         // GET: UserController
         public ActionResult Index()
         {
@@ -35,7 +30,7 @@ namespace ElectronicShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = UserVM.LoginUser(_unitOfWork, userVM);
+                var user = UserVM.LoginUser(bussinseContext, userVM);
                 if (user == null)
                 {
                     ViewBag.LoginError = true;

@@ -52,27 +52,26 @@ namespace ElectronicShopBL.ViewModels
             return modelVM;
         } 
 
-        public static User  addCustomer(IUnitOfWork unitOfWork, CustomerVM customerVM)
+        public static User  addCustomer(IBussinseContext bussinseContext, CustomerVM customerVM)
         {
             //var checkExistUser = bussinseContext.UserBL.Check(u => u.userName == customerVM.email);
-            var checkExistUser = unitOfWork.UserRepository.Find(u => u.userName == customerVM.email);
+            var checkExistUser = bussinseContext.UserBL.Check(u => u.userName == customerVM.email);
             if (checkExistUser.Count == 0)
             {
             // add customer
             Customer customer = customerVM;
-            unitOfWork.CustomerRepository.Add(customer);
-            unitOfWork.Complete();
-                // add user
+            bussinseContext.CustomerBL.AddNew(customer);
+            // add user
             UserVM user = new UserVM();
             user.userName = customerVM.email;
             user.password = customerVM.password;
             user.role = (int)Roles.Customer;
                 // register user
-            var  isRegister=UserVM.RegisterUser( unitOfWork, user);
+            var  isRegister=UserVM.RegisterUser(bussinseContext, user);
                 if (isRegister==true)
                 {
                     // login user
-                    var result = UserVM.LoginUser(unitOfWork, user);
+                    var result = UserVM.LoginUser(bussinseContext, user);
                     if (result!=null)
                     {
                         user.id = result.id;
@@ -87,9 +86,9 @@ namespace ElectronicShopBL.ViewModels
                 return null;
             }
         }
-        public static List<CustomerVM> getCustomers(IUnitOfWork unitOfWork)
+        public static List<CustomerVM> getCustomers(IBussinseContext bussinseContext)
         {
-            var data = unitOfWork.CustomerRepository.GetAll();
+            var data = bussinseContext.CustomerBL.GetAll();
             var VMs = new List<CustomerVM>();
             foreach (var item in data)
             {

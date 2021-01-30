@@ -1,4 +1,6 @@
-﻿using ElectronicShop.Filters;
+﻿using ElectronicShop.App_Start;
+using ElectronicShop.Filters;
+using ElectronicShopBL.IBL;
 using ElectronicShopBL.ViewModels;
 using ElectronicShopRepository;
 using Microsoft.AspNetCore.Http;
@@ -7,28 +9,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity;
 
 namespace ElectronicShop.Controllers
 {
    
     public class ProductController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public ProductController(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        IBussinseContext bussinseContext = UnityConfig.Container.Resolve<IBussinseContext>();
+
         // GET: ProductController
         public IActionResult Index()
         {
-            var vm = ProductVM.getProducts(_unitOfWork);
+            var vm = ProductVM.getProducts(bussinseContext);
             return View(vm);
         }
 
         // GET: ProductController/Details/5
         public IActionResult Details(int id)
         {
-            var result = ProductVM.getProduct(_unitOfWork, id);
+            var result = ProductVM.getProduct(bussinseContext, id);
             return View(result);
           
       
@@ -50,7 +50,7 @@ namespace ElectronicShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = ProductVM.addProduct(_unitOfWork, productVM);
+                var result = ProductVM.addProduct(bussinseContext, productVM);
                 if (result==null)
                 {
                     return View(productVM);

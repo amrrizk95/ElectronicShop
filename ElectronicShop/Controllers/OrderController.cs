@@ -1,4 +1,6 @@
-﻿using ElectronicShop.Filters;
+﻿using ElectronicShop.App_Start;
+using ElectronicShop.Filters;
+using ElectronicShopBL.IBL;
 using ElectronicShopBL.ViewModels;
 using ElectronicShopRepository;
 using Microsoft.AspNetCore.Http;
@@ -7,16 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity;
 
 namespace ElectronicShop.Controllers
 {
     public class OrderController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public OrderController(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        IBussinseContext bussinseContext = UnityConfig.Container.Resolve<IBussinseContext>();
+
+    
         // GET: OrderController1
         [Authenticate]
       
@@ -24,7 +25,7 @@ namespace ElectronicShop.Controllers
         {
             var userId = HttpContext.Session.GetInt32("CurrentUserId");
             var Role = HttpContext.Session.GetInt32("UserRole");
-            var vm = OrderVM.getUserOrders(_unitOfWork, userId, Role);
+            var vm = OrderVM.getUserOrders(bussinseContext, userId, Role);
 
             return View(vm);
         }
@@ -39,7 +40,7 @@ namespace ElectronicShop.Controllers
         // GET: OrderController1/Create
         public ActionResult Create( int productId)
         {
-            var vm= OrderVM.getOrderVM(_unitOfWork, productId);
+            var vm= OrderVM.getOrderVM(bussinseContext, productId);
             return View(vm);
         }
 
@@ -52,7 +53,7 @@ namespace ElectronicShop.Controllers
             var customerId = HttpContext.Session.GetInt32("CurrentUserId");
             if (ModelState.IsValid)
             {
-                var result = OrderVM.addOrder(_unitOfWork, vm, customerId);
+                var result = OrderVM.addOrder(bussinseContext, vm, customerId);
                 return RedirectToAction("Index", "Order");
             }
             else

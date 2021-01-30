@@ -16,16 +16,12 @@ namespace ElectronicShop.Controllers
     public class CustomerController : Controller
     {
         IBussinseContext bussinseContext = UnityConfig.Container.Resolve<IBussinseContext>();
-        private readonly IUnitOfWork _unitOfWork;
-        public CustomerController(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+     
         // GET: CustomerController
         [AuthorizeAdmin]
         public ActionResult Index()
         {
-            var vm = CustomerVM.getCustomers(_unitOfWork);
+            var vm = CustomerVM.getCustomers(bussinseContext);
             return View(vm);
         }
 
@@ -49,7 +45,7 @@ namespace ElectronicShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = CustomerVM.addCustomer(_unitOfWork, customerVM);
+                var user = CustomerVM.addCustomer(bussinseContext, customerVM);
                 if (user == null)
                 {
                     ViewBag.LoginError = true;

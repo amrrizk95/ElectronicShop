@@ -40,17 +40,16 @@ namespace ElectronicShopBL.ViewModels
 
             return modelVM;
         }
-        public static bool RegisterUser(IUnitOfWork unitOfWork, UserVM userVM)
+        public static bool RegisterUser(IBussinseContext bussinseContext, UserVM userVM)
         {
-            var checkExistUser = unitOfWork.UserRepository.Find(u => u.userName == userVM.userName);
+            var checkExistUser = bussinseContext.UserBL.Check(u => u.userName == userVM.userName);
             if (checkExistUser.Count==0)
             {
                 try
                 {
                     User user = userVM;
                     user.password = helper.GetMD5(user.password);
-                    unitOfWork.UserRepository.Add(user);
-                    unitOfWork.Complete();
+                    bussinseContext.UserBL.AddNew(user);
                 }
                 catch (Exception)
                 {
@@ -65,10 +64,10 @@ namespace ElectronicShopBL.ViewModels
             }
             return true;
         }
-        public static User LoginUser(IUnitOfWork unitOfWork, UserVM userVM)
+        public static User LoginUser(IBussinseContext bussinseContext, UserVM userVM)
         {
             var f_password = helper.GetMD5( userVM.password);
-            var data = unitOfWork.UserRepository.GetWithInclude(u => u.userName == userVM.userName && u.password == f_password);
+            var data = bussinseContext.UserBL.Check(u => u.userName == userVM.userName && u.password == f_password);
             if (data.Count>0)
             {
                 return data[0];
